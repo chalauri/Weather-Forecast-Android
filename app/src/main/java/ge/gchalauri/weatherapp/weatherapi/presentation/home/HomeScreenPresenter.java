@@ -33,7 +33,9 @@ public class HomeScreenPresenter extends BasePresenter<HomeScreenView> {
                         .doOnTerminate(mView::hideLoader)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.newThread())
-                        .subscribe(this::onResponseReceived, this::onError, this::onCompleted)
+                        .subscribe(this::onResponseReceived,
+                                this::onError,
+                                this::onCompleted)
         );
     }
 

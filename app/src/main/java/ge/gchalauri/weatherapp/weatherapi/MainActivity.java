@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         ApixuService service = retrofit.create(ApixuService.class);
-
+        System.out.println("BASE "+ Consts.URL);
         Call<ApixuResponse> callService = service.getWeather(Consts.DEFAULT_CITY, Consts.API_KEY);
 
         System.out.println("URL " + callService.request().url());

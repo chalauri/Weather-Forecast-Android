@@ -29,7 +29,8 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="0.26"
             android:width="5dp"
-            android:background="@drawable/here" />
+            android:background="@drawable/here"
+            android:onClick="find"/>
 
         <Button
             android:id="@+id/find"

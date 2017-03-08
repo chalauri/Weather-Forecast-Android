@@ -19,6 +19,32 @@ android {
     }
 }
 
+apply plugin: 'realm-android'
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+
+    }
+    dependencies {
+
+        classpath "io.realm:realm-gradle-plugin:3.0.0"
+        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:1.1.1'
+    }
+}
+
+repositories {
+    maven {
+        url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
+    }
+}
+
+dependencies {
+    compile 'com.facebook.stetho:stetho:1.4.1'
+    compile 'com.uphyca:stetho_realm:2.0.0'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -29,3 +55,4 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 }
+

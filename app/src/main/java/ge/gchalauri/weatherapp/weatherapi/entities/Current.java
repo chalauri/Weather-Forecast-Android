@@ -2,11 +2,16 @@ package ge.gchalauri.weatherapp.weatherapi.entities;
 
 import java.io.Serializable;
 
+import io.realm.RealmModel;
+import io.realm.annotations.RealmClass;
+
 /**
  * Created by G.Chalauri on 03/06/17.
  */
 
-public class Current implements Serializable {
+@RealmClass
+public class Current implements Serializable, RealmModel {
+
     private static final long serialVersionUID = 1L;
 
     //Local time when the real time data was updated.
@@ -183,41 +188,5 @@ public class Current implements Serializable {
 
     public void setCloud(Integer cloud) {
         this.cloud = cloud;
-    }
-}
-
-class Condition {
-
-    //Weather condition text
-    private String text;
-
-    //Weather icon url
-    private String icon;
-
-    //	Weather condition unique code.
-    private Integer code;
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
     }
 }

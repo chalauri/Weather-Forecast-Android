@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface ApixuService {
 
-    @GET("/v1/current.json")
+    @GET("current.json")
     Call<ApixuResponse> getWeather(@Query("q") String city,@Query("key") String key);
 
 }

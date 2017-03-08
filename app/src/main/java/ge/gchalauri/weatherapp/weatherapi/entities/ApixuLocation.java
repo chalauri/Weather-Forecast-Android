@@ -2,11 +2,15 @@ package ge.gchalauri.weatherapp.weatherapi.entities;
 
 import java.io.Serializable;
 
+import io.realm.RealmModel;
+import io.realm.annotations.RealmClass;
+
 /**
  * Created by G.Chalauri on 03/06/17.
  */
 
-public class ApixuLocation implements Serializable{
+@RealmClass
+public class ApixuLocation implements Serializable, RealmModel {
 
     private static final long serialVersionUID = 1L;
 
@@ -15,7 +19,7 @@ public class ApixuLocation implements Serializable{
     private String country;
     private Double lat;
     private Double lon;
-    private String ts_id ;
+    private String ts_id;
     private Double localtime_epoch;
     private String localtime;
 

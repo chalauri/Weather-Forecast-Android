@@ -2,6 +2,7 @@ package ge.gchalauri.weatherapp.weatherapi;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import ge.gchalauri.weatherapp.weatherapi.entities.ApixuLocation;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
         service = retrofit.create(ApixuService.class);
 
         citySearch = (EditText) findViewById(R.id.city);
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         cityData = (TextView) findViewById(R.id.city_data);
         note = (TextView) findViewById(R.id.note);
 
-        dataLayout = (LinearLayout)findViewById(R.id.data_layout);
+        dataLayout = (LinearLayout) findViewById(R.id.data_layout);
     }
 
     public void search(View view) throws IOException {
@@ -143,14 +146,48 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void loadData(ApixuResponse response){
+    private void loadData(ApixuResponse response) {
         cityData.setText(response.getLocation().getName().toUpperCase());
-        temperature.setText(response.getCurrent().getTemp_c()+ " ℃");
+        temperature.setText(response.getCurrent().getTemp_c() + " ℃");
         note.setText(response.getCurrent().getCondition().getText());
 
         dataLayout.setVisibility(View.VISIBLE);
 
         String iconUrl = response.getCurrent().getCondition().getIcon();
         loadImage(iconUrl);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        Bitmap bitmap = ((BitmapDrawable) icon.getDrawable()).getBitmap();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, stream);
+        byte[] byteArray = stream.toByteArray();
+        outState.putByteArray("iconData",byteArray);
+
+        outState.putString("temperature",temperature.getText().toString());
+        outState.putString("city",cityData.getText().toString());
+        outState.putString("note",note.getText().toString());
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        byte[] bitmapdata = savedInstanceState.getByteArray("iconData");
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+        icon.setImageBitmap(bitmap);
+
+
+        temperature.setText(savedInstanceState.getString("temperature"));
+        cityData.setText(savedInstanceState.getString("city"));
+        note.setText(savedInstanceState.getString("note"));
+
+        dataLayout.setVisibility(View.VISIBLE);
+
+        System.out.println("ENTER RESTORE");
     }
 }
